@@ -24,7 +24,7 @@
     <script src="./config.js"></script>
     <script src="./js/setting.js"></script>
     <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         .swal2-html-container {
             color: aliceblue;
@@ -34,7 +34,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
+            font-family: 'Quicksand', sans-serif;
         }
         /* input range */
         
@@ -267,7 +267,7 @@
         'numSegments': 10, // Số ô
         'responsive': true,
         'segments': [{
-            'fillStyle': '#FF0000',
+            'fillStyle': '#d72631',
             'text': 'Ô mất lượt',
             'size': winwheelPercentToDegrees(10),
             'textFontSize': 25,
@@ -309,19 +309,19 @@
             'textFontSize': 18,
             'textFillStyle': '#ffffff'
         }, {
-            'fillStyle': '#00FF66',
+            'fillStyle': '#4CAF50',
             'text': '100.000 VNĐ',
             'size': winwheelPercentToDegrees(10),
             'textFontSize': 16,
             'textFillStyle': '#ffffff'
         }, {
-            'fillStyle': '#FF9966',
+            'fillStyle': '#FFB259',
             'text': '200.000 VNĐ',
             'size': winwheelPercentToDegrees(10),
             'textFontSize': 16,
             'textFillStyle': '#ffffff'
         }, {
-            'fillStyle': '#00FFFF',
+            'fillStyle': '#1979a9',
             'text': '500.000 VNĐ',
             'size': winwheelPercentToDegrees(10),
             'textFontSize': 16,
@@ -508,8 +508,8 @@
                 document.getElementById("xuatsotien").src = ""; // Xoá ảnh tiền
                 const urlMoney = "img/cn.jpg";
                 Swal.fire({
-                    title: "<h3 style='color:white'>" + 'Oh no!' + "</h3>",
-                    text: 'Công chúa nhận được cái nịt! :))',
+                    title: "<h3 style='color:white'>" + 'Ối dồi ôi!' + "</h3>",
+                    text: 'Công chúa nhận được cái nịt! 🤣',
                     imageUrl: urlMoney,
                     imageWidth: 400,
                     imageHeight: 200,
@@ -526,7 +526,7 @@
                 const urlMoney = "img/" + indicatedSegment.text.replace(".000 VNĐ", "") + "kk.jpg";
                 const text = "Mai yêu của chồng đã nhận được " + indicatedSegment.text;
                 Swal.fire({
-                        title: "<h3 style='color:white'>" + 'Xin chúc mừng em bé :3' + "</h3>",
+                        title: "<h3 style='color:white'>" + 'Xin chúc mừng em bé 😘' + "</h3>",
                         text: text,
                         imageUrl: urlMoney,
                         imageWidth: 400 + (indicatedSegment.text.replace(".000 VNĐ", "").length > 1 ? 100 : 0),
