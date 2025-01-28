@@ -23,5 +23,5 @@ function changeSetting(){
     const storedRaties = localStorage.getItem(setting);
     const raties = storedRaties ? JSON.parse(storedRaties) : (CONFIG.raties);
     localStorage.setItem('raties', JSON.stringify(raties));
-    document.getElementById("myImg").src = "img/" + setting + ".png";
+    // document.getElementById("myImg").src = "img/" + setting + ".png";
 }
