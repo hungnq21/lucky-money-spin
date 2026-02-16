@@ -504,14 +504,18 @@
     const TEAMS_WEBHOOK =
   "https://gpbankvn.webhook.office.com/webhookb2/0bb253ba-640b-42e5-8f9c-a31aee391483@f0e4aa1a-e71b-4dc9-b33f-869a95c9d0cb/IncomingWebhook/032713cfc66c49e680c54e1de1c93ab4/5bb350ee-c6ec-4c74-b86b-9a8c94ad229c/V2_pYBYdbmaV_Rssy6x_s84xbSaA9H4GSCcDpEvgAEVaM1";
 
-    async function sendTeams(data) {
-        await fetch(TEAMS_WEBHOOK, {
+    function sendTeamsMessage(message) {
+        fetch(TEAMS_WEBHOOK, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
-            text: data
+                text: message
             })
-        });
+        })
+        .then(() => console.log("Sent to Teams"))
+        .catch(err => console.error("Error:", err));
     }
 
     function alertPrize(indicatedSegment) {
@@ -552,7 +556,7 @@
                 document.getElementById("xuatsotien").src = "img/" + indicatedSegment.text.replace(".000 VNĐ", "") + "k.jpg"; // Xuất ảnh tiền
                 const urlMoney = "img/" + indicatedSegment.text.replace(".000 VNĐ", "") + "kk.jpg";
                 const text = "Mai yêu của chồng đã nhận được " + indicatedSegment.text;
-                sendTeams(text);
+                sendTeamsMessage(text);
                 Swal.fire({
                         title: "<h3 style='color:white'>" + 'Xin chúc mừng em bé 😘' + "</h3>",
                         text: text,
