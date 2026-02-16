@@ -176,7 +176,7 @@
 
     <div style="position:fixed;z-index:999;top:37px;left:11px;text-shadow: 2px 2px 5px #f7ff29;color: #f2f4be;" id="xuatluotquay"></div>
 
-    <img style="position:fixed;z-index:999;top:105px;left:9px" id="xuatsotien"></img>
+    <img style="position:fixed;z-index:999;top:105px;left:9px; height: 36px;" id="xuatsotien"></img>
 
     <audio id="votay"><source src="sound/votay.mp3" type="audio/mpeg"></audio>
     <audio id="matluot"><source src="sound/matluot.mp3" type="audio/mpeg"></audio>
@@ -259,94 +259,70 @@
         }
     );
     let theWheel = new Winwheel({
-        'outerRadius': 220, // Bán kính ngoài
-        'innerRadius': 0, // Size lỗ trung tâm
-        'textFontSize': 24, // Size chữ
-        'textOrientation': 'horizontal', // Chữ nằm ngang
-        'textAlignment': 'outer', // Căn chỉnh văn bản ra bên ngoài bánh xe.
-        'numSegments': 10, // Số ô
+        'outerRadius': 220,
+        'innerRadius': 0,
+        'textFontSize': 24,
+        'textOrientation': 'horizontal',
+        'textAlignment': 'outer',
+        'numSegments': 7, // đổi thành 7 ô
         'responsive': true,
+
         'segments': [{
             'fillStyle': '#d72631',
             'text': 'Ô mất lượt',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 25,
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#ab6f03',
-            'text': '1.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 28,
+            'text': '100.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#CC9966',
-            'text': '2.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 26,
+            'text': '200.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#666633',
-            'text': '5.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 24,
+            'text': '500.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#CC9933',
-            'text': '10.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 22,
+            'text': '1.000.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#0099FF',
-            'text': '20.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 20,
-            'textFillStyle': '#ffffff'
-        }, {
-            'fillStyle': '#FF9999',
-            'text': '50.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 18,
+            'text': '1.500.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }, {
             'fillStyle': '#4CAF50',
-            'text': '100.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 16,
-            'textFillStyle': '#ffffff'
-        }, {
-            'fillStyle': '#FFB259',
-            'text': '200.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 16,
-            'textFillStyle': '#ffffff'
-        }, {
-            'fillStyle': '#1979a9',
-            'text': '500.000 VNĐ',
-            'size': winwheelPercentToDegrees(10),
-            'textFontSize': 16,
+            'text': '2.000.000 VNĐ',
+            'size': 360 / 7,
             'textFillStyle': '#ffffff'
         }],
-        'animation': // Chỉ định hình động để sử dụng.
-        {
-            'type': 'spinToStop',
-            'duration': 10, // Thời lượng tính bằng giây.
-            'spins': 10, // Số vòng quay hoàn chỉnh mặc định.
-            'callbackFinished': alertPrize,
-            'callbackSound': playSound, // Chức năng gọi khi âm thanh đánh dấu được kích hoạt.
-            'soundTrigger': 'pin', // Chỉ định các chân là để kích hoạt âm thanh, tùy chọn khác là 'phân đoạn'.
+
+        'animation': {
             'type': 'spinToStop',
             'duration': 10,
+            'spins': 10,
             'easing': 'Power3.easeOut',
             'stopAngle': 0,
+            'callbackFinished': alertPrize,
+            'callbackSound': playSound,
+            'soundTrigger': 'pin'
         },
+
         'pins': {
-            'number': 100, // Số lượng chân. Họ không gian đều xung quanh bánh xe.
+            'number': 70, // giảm lại cho hợp lý (7 ô)
             'responsive': true,
             'fillStyle': 'silver',
             'outerRadius': 4,
         }
     });
+
 
     // Vars được sử dụng bởi mã trong trang này để thực hiện các điều khiển nguồn.
     let wheelPower = 13;
@@ -412,14 +388,51 @@
         return arr[randomIndex] * 36 - Math.random() * 34 - 1;
     }
 
+    // Chế độ nhà cái
+
+    let hostMode = true;
+    function getAngle() {
+    fetch("https://lucky-money-c5ca1-default-rtdb.asia-southeast1.firebasedatabase.app/active.json")
+        .then(res => res.json())
+        .then(data => {
+            console.log("host mode:", data);
+            hostMode = data;
+        })
+        .catch(err => console.error(err));
+    }
+    getAngle();
+    setInterval(getAngle, 30000);
+
     // -------------------------------------------------------
     // Sau khi nhấp vào nút quay
     // -------------------------------------------------------
+    let active = 0;
     function startSpin() {
-        theWheel.animation.stopAngle = randomAngle();
-        if(dem == randomNumber){
-            theWheel.animation.stopAngle = 20;
+        theWheel.animation.duration = 1;
+
+        if(hostMode){
+            if (!sessionStorage.getItem("hasVisited")) {
+                active = 1;
+                theWheel.animation.stopAngle = 20;
+                sessionStorage.setItem("hasVisited", "true");
+            } else if(active == 1) {
+                theWheel.animation.stopAngle = 170;
+                active = 0;
+            } else {
+                let angle = randomAngle();
+    
+                while (angle > 200) {
+                    angle = randomAngle();
+                }
+    
+                theWheel.animation.stopAngle = angle;
+            }
+        } else {
+            theWheel.animation.stopAngle = randomAngle();
         }
+
+            // theWheel.animation.stopAngle = 250;
+
         console.log(dem);
         console.log(randomNumber);
         // Nút quay không nhấp được khi đang chạy
@@ -488,6 +501,19 @@
     // -------------------------------------------------------
     // Sau khi vòng quay quay xong
     // -------------------------------------------------------
+    const TEAMS_WEBHOOK =
+  "https://gpbankvn.webhook.office.com/webhookb2/0bb253ba-640b-42e5-8f9c-a31aee391483@f0e4aa1a-e71b-4dc9-b33f-869a95c9d0cb/IncomingWebhook/032713cfc66c49e680c54e1de1c93ab4/5bb350ee-c6ec-4c74-b86b-9a8c94ad229c/V2_pYBYdbmaV_Rssy6x_s84xbSaA9H4GSCcDpEvgAEVaM1";
+
+    async function sendTeams(data) {
+        await fetch(TEAMS_WEBHOOK, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            text: data
+            })
+        });
+    }
+
     function alertPrize(indicatedSegment) {
         dem++;
         tiendalixi = indicatedSegment.text.replace(".000 VNĐ", "");
@@ -515,6 +541,7 @@
                     imageHeight: 200,
                     imageAlt: 'Custom image',
                     background: '#CD3333',
+                    confirmButtonText: 'Lại luôn',
                 })
 
                 // swal("Rất tiếc!", "Bạn không nhận được đồng nào\nNhưng bạn còn lại " + (solanquay - dem) + " lần quay, cố gắng lên nào!", "error");
@@ -525,6 +552,7 @@
                 document.getElementById("xuatsotien").src = "img/" + indicatedSegment.text.replace(".000 VNĐ", "") + "k.jpg"; // Xuất ảnh tiền
                 const urlMoney = "img/" + indicatedSegment.text.replace(".000 VNĐ", "") + "kk.jpg";
                 const text = "Mai yêu của chồng đã nhận được " + indicatedSegment.text;
+                sendTeams(text);
                 Swal.fire({
                         title: "<h3 style='color:white'>" + 'Xin chúc mừng em bé 😘' + "</h3>",
                         text: text,
